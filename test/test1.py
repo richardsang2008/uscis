@@ -1,7 +1,7 @@
 
 import logging
 
-from src.utils.NetworkHelper import NetworkHelper
+from src.utils.network_helper import NetworkHelper
 
 
 def main():
