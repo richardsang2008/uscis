@@ -14,8 +14,8 @@ def main():
     networkhelper = NetworkHelper(logging)
     urlStr = "http://travel.state.gov/content/visas/english/law-and-policy/bulletin.html"
     networkhelper.visa_bulletin_geturls(urlStr)
-    #for key, value in networkhelper.visaboardMaps.iteritems():
-    #    logging.debug(key.strftime("%A %d. %B %Y")+"=====>"+ value)
+    for key, value in networkhelper.visaboardMaps.iteritems():
+       logging.debug(key.strftime("%A %d. %B %Y")+"=====>"+ value)
 
     logging.info("end")
 def testcasestatus():
@@ -25,5 +25,16 @@ def testcasestatus():
     logging.debug(json.dumps(caseinfor.__dict__))
     logging.info("end")
 
+def testlookupsurgent():
+    logging.info("test case status")
+    networkHelper = NetworkHelper(logging)
+    surgents = networkHelper.uscis_civil_surgeons_lookup("90063")
+    for surgent in surgents:
+        logging.debug(json.dumps(surgent.__dict__))
+    logging.info("end")
+
+
+
 if __name__=="__main__" :
-    testcasestatus()
+    #main()
+    testlookupsurgent()
