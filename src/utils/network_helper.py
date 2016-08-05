@@ -2,12 +2,14 @@ import lxml.html
 import requests
 from datetime import datetime
 from lxml.cssselect import CSSSelector
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
 
 class NetworkHelper:
     def __init__(self, logger):
         self.logger = logger
-        self.blacklist = ["Update on July Visa Availability", "July 2007 Visa Bulletin",
+        self.blacklist = ["Update on July Visa Availability",
+                          "July 2007 Visa Bulletin",
                           "USCIS Announces Revised Procedures for Determining Visa Availability for Applicants Waiting to File for Adjustment of Status."]
         self.visaboardMaps = {};
 
@@ -36,3 +38,11 @@ class NetworkHelper:
                 if (ahref.text not in self.blacklist):
                     self.visaboardMaps.update(
                         {self.parse_current_date(ahref.text): "http://travel.state.gov" + ahref.get("href")})
+
+    def usciscaselookup(self,casenumber):
+        post_params ={"appReceiptNum": casenumber}
+        urlStr = "https://egov.uscis.gov/casestatus/mycasestatus.do"
+        requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+        #page = requests.get(urlStr, verify=False)
+        response = requests.post(urlStr, data=post_params, verify = False)
+        self.logger.debug( response.text)
