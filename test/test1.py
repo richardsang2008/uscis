@@ -1,4 +1,4 @@
-
+import json
 import logging
 
 from src.utils.network_helper import NetworkHelper
@@ -21,7 +21,8 @@ def main():
 def testcasestatus():
     logging.info("test case status")
     networkhelper = NetworkHelper(logging)
-    networkhelper.usciscaselookup("MSC1391630884")
+    caseinfor = networkhelper.usciscaselookup("MSC1391630884")
+    logging.debug(json.dumps(caseinfor.__dict__))
     logging.info("end")
 
 if __name__=="__main__" :
